@@ -39,6 +39,11 @@ class RegexpTrie
     end
   end
 
+  # @return [String]
+  def to_str
+    build(@head)
+  end
+
   private
 
   def build(entry)
