@@ -5,12 +5,12 @@ class RegexpTrie
   # @param [Array<String>] strings Set of patterns
   # @param [Fixnum,Boolean] option The second argument of Regexp.new()
   # @return [Regexp]
-  def self.union(*strings, option: nil)
+  def self.union(*strings, option: nil, prefix: '', postfix: '')
     rt = new
     strings.flatten.each do |arg|
       rt.add(arg)
     end
-    rt.to_regexp(option)
+    rt.to_regexp(option, prefix: prefix, postfix: postfix)
   end
 
   def initialize
@@ -31,11 +31,11 @@ class RegexpTrie
   end
 
   # @return [Regexp]
-  def to_regexp(option = nil)
+  def to_regexp(option = nil, prefix: '', postfix: '')
     if @head.empty?
       Regexp.union
     else
-      Regexp.new(build(@head), option)
+      Regexp.new(prefix + build(@head) + postfix, option)
     end
   end
 
